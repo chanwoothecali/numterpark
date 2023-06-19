@@ -1,9 +1,11 @@
 package com.numble.numterpark.user.controller;
 
+import com.numble.numterpark.global.annotation.LoginCheck;
 import com.numble.numterpark.user.service.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -24,5 +26,11 @@ public class UserController {
     @PostMapping("/users/login")
     public void login(@RequestBody @Valid UserDto.LoginRequest loginRequest) {
         userService.login(loginRequest);
+    }
+
+    @LoginCheck
+    @DeleteMapping("/users/logout")
+    public void logout() {
+        userService.logout();
     }
 }
