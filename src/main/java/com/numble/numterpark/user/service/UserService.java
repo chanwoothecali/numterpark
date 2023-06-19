@@ -47,4 +47,8 @@ public class UserService {
     public void logout() {
         session.invalidate();
     }
+
+    public String getLoginUser() {
+        return (String) session.getAttribute(EMAIL);
+    }
 }
