@@ -57,4 +57,27 @@ public class UserDto {
             this.password = encryption;
         }
     }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class LoginRequest {
+        @NotBlank(message = "이메일 주소를 입력해주세요.")
+        @Email(message = "올바른 이메일 주소를 입력해주세요.")
+        private String email;
+
+        @NotBlank(message = "비밀번호를 입력해주세요.")
+        @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하로 입력해주세요.")
+        private String password;
+
+        @Builder
+        public LoginRequest(String email, String password) {
+            this.email = email;
+            this.password = password;
+        }
+
+        public void encryptPassword(PasswordEncoder passwordEncoder) {
+            String encryption = passwordEncoder.encrypt(this.password);
+            this.password = encryption;
+        }
+    }
 }
