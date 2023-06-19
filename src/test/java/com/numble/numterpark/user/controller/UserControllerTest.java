@@ -1,6 +1,9 @@
 package com.numble.numterpark.user.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.refEq;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -8,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.numble.numterpark.user.controller.UserDto.CreateRequest;
+import com.numble.numterpark.user.controller.UserDto.LoginRequest;
 import com.numble.numterpark.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +40,7 @@ class UserControllerTest {
     public void createUser_successful() throws Exception {
         // given
         CreateRequest createRequest = createTestUserData();
+        willDoNothing().given(userService).createUser(createRequest);
         String postJson = objectMapper.writeValueAsString(createRequest);
 
         // when & then
@@ -45,6 +50,27 @@ class UserControllerTest {
             )
             .andExpect(status().isCreated())
             .andDo(print());
+
+        then(userService).should().createUser(refEq(createRequest));
+    }
+
+    @Test
+    @DisplayName("정삭적으로 로그인에 성공한다.")
+    public void login_successful() throws Exception {
+        // given
+        LoginRequest loginRequest = getLoginRequest();
+        willDoNothing().given(userService).login(loginRequest);
+        String postJson = objectMapper.writeValueAsString(loginRequest);
+
+        // when & then
+        mockMvc.perform(post("/users/login")
+                .contentType(APPLICATION_JSON)
+                .content(postJson)
+            )
+            .andExpect(status().isOk())
+            .andDo(print());
+
+        then(userService).should().login(refEq(loginRequest));
     }
 
     private UserDto.CreateRequest createTestUserData() {
@@ -53,6 +79,13 @@ class UserControllerTest {
             .password("testPwd1234")
             .name("테스트네임")
             .phoneNumber("01012345678")
+            .build();
+    }
+
+    private LoginRequest getLoginRequest() {
+        return LoginRequest.builder()
+            .email("test123@modu.com")
+            .password("test1234455")
             .build();
     }
 }
