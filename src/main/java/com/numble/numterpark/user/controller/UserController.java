@@ -20,4 +20,9 @@ public class UserController {
     public void createUser(@RequestBody @Valid UserDto.CreateRequest createRequest) {
         userService.createUser(createRequest);
     }
+
+    @PostMapping("/users/login")
+    public void login(@RequestBody @Valid UserDto.LoginRequest loginRequest) {
+        userService.login(loginRequest);
+    }
 }
