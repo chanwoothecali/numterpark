@@ -28,6 +28,9 @@ class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @MockBean
+    private UserService userService;
+
     @Test
     @DisplayName("정삭적으로 회원가입에 성공한다.")
     public void createUser_successful() throws Exception {
