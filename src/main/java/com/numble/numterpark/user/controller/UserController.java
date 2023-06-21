@@ -2,7 +2,7 @@ package com.numble.numterpark.user.controller;
 
 import com.numble.numterpark.global.annotation.LoginCheck;
 import com.numble.numterpark.user.service.UserService;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;

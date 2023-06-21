@@ -8,7 +8,7 @@ import com.numble.numterpark.user.encoder.PasswordEncoder;
 import com.numble.numterpark.user.exception.DuplicatedEmailException;
 import com.numble.numterpark.user.exception.NotExistedUserException;
 import com.numble.numterpark.user.repository.UserRepository;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
